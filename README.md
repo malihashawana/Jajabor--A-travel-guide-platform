@@ -1,1 +1,1 @@
-Jajabor - A Travel Guide Platform (Laravel implementation)
+Jajabor - A travel guide platform   
