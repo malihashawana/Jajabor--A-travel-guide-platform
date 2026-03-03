@@ -1,12 +1,15 @@
-# Dockerfile for Laravel
+# Use official PHP image with necessary extensions
 FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libonig-dev libpng-dev libxml2-dev curl npm nodejs
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql zip mbstring
+    git \
+    unzip \
+    libpq-dev \
+    libzip-dev \
+    zip \
+    curl \
+    && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -18,12 +21,12 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader --no-dev
 
-# Install JS dependencies and build assets
-RUN npm install && npm run build
+# Set permissions for storage and bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose port
+# Expose port 8000
 EXPOSE 8000
 
 # Start Laravel server
