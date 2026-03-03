@@ -1,0 +1,23 @@
+/* complaints.css */
+
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: black;
+}
+
+.custom-textarea {
+    resize: none;
+    border-radius: 10px;
+}
+
+button[type="submit"] {
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
